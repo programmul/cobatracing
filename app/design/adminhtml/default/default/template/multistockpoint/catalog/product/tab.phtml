@@ -4,12 +4,12 @@
  */
 $url=$this->helper('core/url')->getCurrentUrl();
 $i=explode('/id/', $url);
-if(count($i)>0){
+/*if(count($i)>0){
 	$i=explode('/',$i[1]);
 	$id=$i[0];
 
 
-}
+}*/
 $stockpoints=mage::getModel('multistockpoint/stockpoint')->getCollection();
 $spoints=[];
 foreach ($stockpoints as $stockpoint){
