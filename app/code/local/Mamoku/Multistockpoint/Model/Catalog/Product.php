@@ -59,7 +59,7 @@ class Mamoku_Multistockpoint_Model_Catalog_Product extends Mage_Catalog_Model_Pr
             }
 			$tempPrices = Mage::getSingleton('catalog/product')->load($product->getId())->getPrice_qty();
 			$obj=json_decode(str_replace("'", '"', $tempPrices),true);
-			$new_price = $obj[$prname][13];
+			$new_price = $obj[$prname][1];
             if(intval($new_price)>0){
                     return $new_price;
             }

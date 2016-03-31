@@ -16,15 +16,15 @@ function post($param,$post){
         try {
          
         $product->setMediaGallery(array('images' => array(), 'values' => array())) //media gallery initialization
-            ->addImageToMediaGallery('media/catalog/product/'.$post->image, array('image', 'small_image'), false, false)
-            ->addImageToMediaGallery('media/catalog/product/'.$post->small_image, array('thumbnail'), false, false)
+            ->addImageToMediaGallery('media/catalog/product/'.$post->image, array('image'), false, false)
+            ->addImageToMediaGallery('media/catalog/product/'.$post->small_image, array('small_image'), false, false)
             ->addImageToMediaGallery('media/catalog/product/'.$post->thumbnail, array('thumbnail'), false, false);
 
     } catch (Exception $exc) {
         
         $product->setMediaGallery(array('images' => array(), 'values' => array())) //media gallery initialization
-            ->addImageToMediaGallery('media/catalog/product/'.$post->image, array('image', 'small_image'), false, false)
-            ->addImageToMediaGallery('media/catalog/product/'.$post->small_image, array('thumbnail'), false, false)
+            ->addImageToMediaGallery('media/catalog/product/'.$post->image, array('image'), false, false)
+            ->addImageToMediaGallery('media/catalog/product/'.$post->small_image, array('small_image'), false, false)
             ->addImageToMediaGallery('media/catalog/product/'.$post->thumbnail, array('thumbnail'), false, false);
 
     }

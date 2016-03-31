@@ -106,7 +106,7 @@ function stateChangedKel(){
         <div class="fieldset">
             <input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
             <input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
-            <h2 class="legend"><?php echo $this->__('Personal') ?></h2>
+            <h2 class="legend"><?php echo $this->__('Informasi Personal') ?></h2>
             <ul class="form-list">
                 <li class="fields">
                     <?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject($this->getFormData())->setForceUseCustomerAttributes(true)->toHtml() ?>
@@ -120,27 +120,20 @@ function stateChangedKel(){
                     </div>
                 </li>
                 
-                <!-- <li class="fields">
+                <li class="fields">
                     <div class="field">
                     <label for="email_address_cc"><?php echo $this->__('Email CC') ?></label>
                     <div class="input-box">
                         <input type="text" name="email_cc" id="email_cc" value="<?php echo $this->escapeHtml($this->getFormData()->getEmailCc()) ?>" title="<?php echo $this->__('Email CC') ?>" class="input-text validate-email" />
                     </div>
                     </div>
-                    </li> -->
+                    </li>
 
-                 <li class="fields">
-                    <div class="field">
-                        <label for="mobile_number" class="required"><em>*</em><?php echo $this->__('No HP') ?></label>
-                            <div class="input-box">
-                                <input type="text" name="mobile_number" id="mobile_number" value="<?php echo $this->escapeHtml($this->getFormData()->getMobileNumber()) ?>" title="<?php echo $this->__('Mobile Number') ?>" class="input-text validate-number required-entry" />
-                            </div> 
-                    </div>
-                    </li>           
+
 
                 <li class="fields">
                     <div class="field">
-                    <label for="ktp_number" class="required"><em>*</em><?php echo $this->__('No. KTP') ?></label>
+                    <label for="ktp_number" class="required"><em>*</em><?php echo $this->__('No KTP') ?></label>
                         <div class="input-box">
                             <input type="text" name="ktp_number" id="ktp_number" value="<?php echo $this->escapeHtml($this->getFormData()->getKtpNumber()) ?>" title="<?php echo $this->__('ID Card') ?>" class="input-text validate-number required-entry" />
                         </div>
@@ -159,7 +152,14 @@ function stateChangedKel(){
                 <li><?php echo $_gender->setGender($this->getFormData()->getGender())->toHtml() ?></li>
             <?php endif ?>
 
-                
+                <li class="fields">
+                    <div class="field">
+                        <label for="mobile_number" class="required"><em>*</em><?php echo $this->__('No HP') ?></label>
+                            <div class="input-box">
+                                <input type="text" name="mobile_number" id="mobile_number" value="<?php echo $this->escapeHtml($this->getFormData()->getMobileNumber()) ?>" title="<?php echo $this->__('Mobile Number') ?>" class="input-text validate-number required-entry" />
+                            </div> 
+                    </div>
+                    </li>
 
                 <!-- <li class="fields">
                     <div class="field">
@@ -175,182 +175,11 @@ function stateChangedKel(){
 
 
 
- 
-    <?php if($this->getShowAddressFields()): ?>
-        <div class="fieldset">
-            <input id="create_address" type="hidden" name="create_address" value="1" />
-            <h2 class="legend"><?php echo $this->__('Outlet') ?></h2>
-            <ul class="form-list">
-                
-                    <?php
-                    $model = Mage::getModel('multistockpoint/eav_entity_attribute_source_customeroptionsoutletype');
-                    $rows = $model->getAllOptions();
-                    if($rows[0]['visibility'] != 0):
-                    ?>
-                    <li>
-                    <div class="field">
-                        <label for="outlet_type"><?php echo $this->__('Tipe Outlet') ?></label>
-                        <div class="input-box">
-                             <select name="outlet_type" id="outlet_type">
-                                <?php
-                                foreach($rows as $type){
-                                    ?>
-                                    <option value="<?php echo $type['value']?>"><?php echo $type['value'];?></option>
-                                    <?php
-                                }?>
-                            </select>
-                            </div>
-                    </div>
-                    </li>
-                    <?php
-                    endif;
-                    ?>
-                </li>
-
-
-
-                <li class="fields">
-                    <div class="field">
-                        <label for="nama_outlet" class="required"><em>*</em><?php echo $this->__('Nama Outlet') ?></label>
-                        <div class="input-box">
-                            <input type="text" name="nama_outlet" id="nama Outlet" value="<?php echo $this->escapeHtml($this->getFormData()->getNamaOutlet()) ?>" title="<?php echo $this->__('Nama Outlet') ?>" class="input-text validate-nama_outlet required-entry" />
-                        </div>
-                    </div>
-                </li>
-
- <li class="fields">
-                    <div class="field">
-                        <label for="outlet_owner" class="required"><em>*</em><?php echo $this->__('Pemilik Outlet') ?></label>
-                        <div class="input-box">
-                            <input type="text" name="outlet_owner" id="outlet_owner" value="<?php echo $this->escapeHtml($this->getFormData()->getOutletOwner()) ?>" title="<?php echo $this->__('Outlet Owner') ?>" class="input-text validate-outlet_owner required-entry" />
-                        </div>
-                    </div>
-                    </li>
-
-                <?php $_streetValidationClass = $this->helper('customer/address')->getAttributeValidationClass('street'); ?>
-                    <li class="wide">
-                        <label for="street_1" class="required"><em>*</em><?php echo $this->__('Alamat Outlet') ?></label>
-                        <div class="input-box">
-                            <input type="text" name="street[]" value="<?php echo $this->escapeHtml($this->getFormData()->getStreet(1)) ?>" title="<?php echo $this->__('Street Address') ?>" id="street_1" class="input-text validate-street[] required-entry" />
-                        </div>
-                    </li>
-                <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
-                <?php for ($_i = 2, $_n = $this->helper('customer/address')->getStreetLines(); $_i <= $_n; $_i++): ?>
-                    <li class="wide">
-                        <div class="input-box">
-                            <input type="text" name="street[]" value="<?php echo $this->escapeHtml($this->getFormData()->getStreet($_i)) ?>" title="<?php echo $this->__('Street Address %s', $_i) ?>" id="street_<?php echo $_i ?>" class="input-text <?php echo $this->getAddressForced() ? $_streetValidationClass : '' ?>" />
-                        </div>
-                    </li>
-                <?php endfor; ?>
-                <li class="fields">
-                     <div class="field" >
-                        <!-- <label for="country" ><?php echo $this->__('Negara') ?></label> -->
-                        <div class="input-box">
-                            <?php //echo $this->getCountryHtmlSelect() ?>
-                            <select id="country_id" name="country_id" hidden="true">
-                                <option value="ID"><?php echo $this->__('Indonesia')?></option>
-                            </select>
-                        </div>
-                    </div>
-                </li>
-                <li class="fields">
-                    <div class="field">
-                        <label for="region_id" class="required"><em>*</em><?php echo $this->__('Propinsi') ?></label>
-                        <div class="input-box">
-                            <select name="region" id="region" onchange="ajaxkota(this.value)" class="validate-select">
-                                <option value="">Pilih Provinsi</option>
-                                <?php 
-                                $connection = Mage::getSingleton('core/resource')->getConnection('core_read');  
-                                $sql= "SELECT distinct propinsi FROM locationcoverage";
-                                $rows = $connection->fetchAll($sql);
-                                foreach( $rows as $row){
-                                    echo '<option value="'.$row['propinsi'].'">'.$row['propinsi'].'</option>';
-                                }
-                                ?>
-                            <select>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label for="city" class="required"><em>*</em><?php echo $this->__('Kota') ?></label>
-                        <div class="input-box">
-                            <select name="city" id="city" onchange="ajaxkec(region.value,this.value)" class="validate-select">
-                                <option value="">Pilih Kota/Kab</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label for="kecamatan" class="required"><em>*</em><?php echo $this->__('Kecamatan') ?></label>
-                        <div class="input-box">
-                            <select name="kecamatan" id="kecamatan" onchange="ajaxkel(region.value,city.value,this.value)" class="validate-select">
-                                <option value="">Pilih Kecamatan</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label for="kelurahan" class="required"><em>*</em><?php echo $this->__('Kelurahan') ?></label>
-                        <div class="input-box">
-                            <select name="kelurahan" id="kelurahan" class="validate-select">
-                                <option value="">Pilih Kelurahan</option>
-                            </select>
-                        </div>
-                    </div>
-                    <li class="fields">
-                        <?php if (!$this->getAddressForced()): ?>
-                        <div class="field">
-                            <label for="zip" class="required"><em>*</em><?php echo $this->__('Kode Pos') ?></label>
-                            <div class="input-box">
-                                <input type="text" id="postcode" name="postcode" value="<?php echo $this->escapeHtml($this->getFormData()->getPostcode()) ?>" title="<?php echo $this->__('Zip/Postal Code') ?>" id="zip" class="input-text validate-zip-international" placeholder="contoh: 15113"/>
-                            </div>
-                        </div>
-                        <?php else: ?>
-                        <div class="field">
-                            <label for="zip" class="required"><em></em><?php echo $this->__('Kode Pos') ?></label>
-                            <div class="input-box">
-                                <input type="text" name="postcode" value="<?php echo $this->escapeHtml($this->getFormData()->getPostcode()) ?>" title="<?php echo $this->__('Zip/Postal Code') ?>" id="zip" class="input-text validate-zip-international <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
-                            </div>
-                        </div>
-                        <?php endif; ?>                    
-                    </li>                 
-                </li>
-
-
-                <div class="fieldset">
-               <!--  <h2 class="legend"><?php echo $this->__('Alamat') ?></h2> -->
-                <li class="fields">
-                    <li class="fields">
-                        <div class="field">
-                                <label for="telephone" class="required"><em>*</em><?php echo $this->__('No. Telepon Outlet') ?></label>
-                                <div class="input-box">
-                                    <input type="text" name="telephone" id="telephone" value="<?php echo $this->escapeHtml($this->getFormData()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-text validate-number required-entry" />
-                                </div>
-                        </div>
-                    </li>
-<!--                     <li class="fields">
-                        <div class="field">
-                            <label for="no_fax" class="<?php echo $requiredClass ?>"><em><?php echo $requiredCharacter ?></em><?php echo $this->__('Fax') ?></label>
-                            <div class="input-box">
-                                <input type="text" name="no_fax" id="no_fax" value="<?php echo $this->escapeHtml($this->getFormData()->getNoFax()) ?>" title="<?php echo $this->__('Fax') ?>" class="input-text <?php echo $this->getAddressForced() ? $this->helper('customer/address')->getAttributeValidationClass('no_fax') : ''?>" />
-                            </div>
-                        </div>
-                     </li> -->
-                    <li class="fields">
-                    <div class="field">
-                        <label for="no_fax" class=""><em></em><?php echo $this->__('No. Fax Outlet') ?></label>
-                        <div class="input-box">
-                            <input type="text" name="no_fax" id="no_fax" value="<?php echo $this->escapeHtml($this->getFormData()->getNoFax()) ?>" title="<?php echo $this->__('Fax') ?>" class="input-text validate-number " />
-                        </div>
-                    </div>
-                    </li>
-
-
-                   
-<?php
+ <?php
                     $model = Mage::getModel('multistockpoint/eav_entity_attribute_source_customeroptionsnpwp');
                     $rows = $model->getAllOptions();
                     if($rows[0]['visibility'] != 0):
                     ?>
-                    <br>
-                    <h2 class="legend"><?php echo $this->__('NPWP') ?></h2><br>
                     <li>
                     <div class="field">
                         <label for="npwp_type"><?php echo $this->__('Tipe NPWP') ?></label>
@@ -401,7 +230,7 @@ function stateChangedKel(){
 
 <li class="fields">
                     <div class="field">
-                        <label for="npwp_number"><?php echo $this->__('No. NPWP') ?></label>
+                        <label for="npwp_number"><?php echo $this->__('Nomor NPWP') ?></label>
                         <div class="input-box">
                             <input type="text" name="npwp_number" id="npwp_number" value="<?php echo $this->escapeHtml($this->getFormData()->getNpwpNumber()) ?>" title="<?php echo $this->__('Nomor NPWP') ?>" class="input-text validate-number required-entry'  <?php echo $this->helper('customer/address')->getAttributeValidationClass('npwp_number') ?>" />
                         </div>
@@ -422,7 +251,7 @@ function stateChangedKel(){
                         </div>
                     </div> 
                 </li>
-            <li class="wide">
+<li class="wide">
                         <label for="npwp_address"><?php echo $this->__('Alamat NPWP') ?></label>
                         <div class="input-box">
                             <input type="text" name="npwp_address" id="npwp_address" value="<?php echo $this->escapeHtml($this->getFormData()->getNpwpAddress()) ?>" title="<?php echo $this->__('NPWP Address') ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('npwp_address') ?>" />
@@ -433,6 +262,175 @@ function stateChangedKel(){
                 </li>
             </ul>
         </div>
+    <?php if($this->getShowAddressFields()): ?>
+        <div class="fieldset">
+            <input id="create_address" type="hidden" name="create_address" value="1" />
+            <h2 class="legend"><?php echo $this->__('Informasi Outlet') ?></h2>
+            <ul class="form-list">
+                
+                    <?php
+                    $model = Mage::getModel('multistockpoint/eav_entity_attribute_source_customeroptionsoutletype');
+                    $rows = $model->getAllOptions();
+                    if($rows[0]['visibility'] != 0):
+                    ?>
+                    <li>
+                    <div class="field">
+                        <label for="outlet_type"><?php echo $this->__('Outlet Type') ?></label>
+                        <div class="input-box">
+                             <select name="outlet_type" id="outlet_type">
+                                <?php
+                                foreach($rows as $type){
+                                    ?>
+                                    <option value="<?php echo $type['value']?>"><?php echo $type['value'];?></option>
+                                    <?php
+                                }?>
+                            </select>
+                            </div>
+                    </div>
+                    </li>
+                    <?php
+                    endif;
+                    ?>
+                </li>
+
+
+
+                <li class="fields">
+                    <div class="field">
+                        <label for="nama_outlet" class="required"><em>*</em><?php echo $this->__('Nama Outlet') ?></label>
+                        <div class="input-box">
+                            <input type="text" name="nama_outlet" id="nama Outlet" value="<?php echo $this->escapeHtml($this->getFormData()->getNamaOutlet()) ?>" title="<?php echo $this->__('Nama Outlet') ?>" class="input-text validate-nama_outlet required-entry" />
+                        </div>
+                    </div>
+                </li>
+
+ <li class="fields">
+                    <div class="field">
+                        <label for="outlet_owner" class="required"><em>*</em><?php echo $this->__('Nama Pemilik Outlet') ?></label>
+                        <div class="input-box">
+                            <input type="text" name="outlet_owner" id="outlet_owner" value="<?php echo $this->escapeHtml($this->getFormData()->getOutletOwner()) ?>" title="<?php echo $this->__('Outlet Owner') ?>" class="input-text validate-outlet_owner required-entry" />
+                        </div>
+                    </div>
+                    </li>
+
+                <?php $_streetValidationClass = $this->helper('customer/address')->getAttributeValidationClass('street'); ?>
+                    <li class="wide">
+                        <label for="street_1" class="required"><em>*</em><?php echo $this->__('Alamat') ?></label>
+                        <div class="input-box">
+                            <input type="text" name="street[]" value="<?php echo $this->escapeHtml($this->getFormData()->getStreet(1)) ?>" title="<?php echo $this->__('Street Address') ?>" id="street_1" class="input-text validate-street[] required-entry" />
+                        </div>
+                    </li>
+                <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
+                <?php for ($_i = 2, $_n = $this->helper('customer/address')->getStreetLines(); $_i <= $_n; $_i++): ?>
+                    <li class="wide">
+                        <div class="input-box">
+                            <input type="text" name="street[]" value="<?php echo $this->escapeHtml($this->getFormData()->getStreet($_i)) ?>" title="<?php echo $this->__('Street Address %s', $_i) ?>" id="street_<?php echo $_i ?>" class="input-text <?php echo $this->getAddressForced() ? $_streetValidationClass : '' ?>" />
+                        </div>
+                    </li>
+                <?php endfor; ?>
+                <li class="fields">
+                     <div class="field" >
+                        <label for="country" ><?php echo $this->__('Negara') ?></label>
+                        <div class="input-box">
+                            <?php //echo $this->getCountryHtmlSelect() ?>
+                            <select id="country_id" name="country_id">
+                                <option value="ID"><?php echo $this->__('Indonesia')?></option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+                <li class="fields">
+                    <div class="field">
+                        <label for="region_id" class="required"><em>*</em><?php echo $this->__('Propinsi') ?></label>
+                        <div class="input-box">
+                            <select name="region" id="region" onchange="ajaxkota(this.value)" class="validate-select">
+                                <option value="">Pilih Provinsi</option>
+                                <?php 
+                                $connection = Mage::getSingleton('core/resource')->getConnection('core_read');  
+                                $sql= "SELECT distinct propinsi FROM mamoku_lokasi";
+                                $rows = $connection->fetchAll($sql);
+                                foreach( $rows as $row){
+                                    echo '<option value="'.$row['propinsi'].'">'.$row['propinsi'].'</option>';
+                                }
+                                ?>
+                            <select>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="city" class="required"><em>*</em><?php echo $this->__('Kota') ?></label>
+                        <div class="input-box">
+                            <select name="city" id="city" onchange="ajaxkec(region.value,this.value)" class="validate-select">
+                                <option value="">Pilih Kota</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="kecamatan" class="required"><em>*</em><?php echo $this->__('Kecamatan') ?></label>
+                        <div class="input-box">
+                            <select name="kecamatan" id="kecamatan" onchange="ajaxkel(region.value,city.value,this.value)" class="validate-select">
+                                <option value="">Pilih Kecamatan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="kelurahan" class="required"><em>*</em><?php echo $this->__('Kelurahan') ?></label>
+                        <div class="input-box">
+                            <select name="kelurahan" id="kelurahan" class="validate-select">
+                                <option value="">Pilih Kelurahan/Desa</option>
+                            </select>
+                        </div>
+                    </div>
+                    <li class="fields">
+                        <?php if (!$this->getAddressForced()): ?>
+                        <div class="field">
+                            <label for="zip" class="required"><em>*</em><?php echo $this->__('Kode Pos') ?></label>
+                            <div class="input-box">
+                                <input type="text" id="postcode" name="postcode" value="<?php echo $this->escapeHtml($this->getFormData()->getPostcode()) ?>" title="<?php echo $this->__('Zip/Postal Code') ?>" id="zip" class="input-text validate-zip-international required-entry" placeholder="contoh: 15113"/>
+                            </div>
+                        </div>
+                        <?php else: ?>
+                        <div class="field">
+                            <label for="zip" class="required"><em>*</em><?php echo $this->__('Kode Pos') ?></label>
+                            <div class="input-box">
+                                <input type="text" name="postcode" value="<?php echo $this->escapeHtml($this->getFormData()->getPostcode()) ?>" title="<?php echo $this->__('Zip/Postal Code') ?>" id="zip" class="input-text validate-zip-international <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
+                            </div>
+                        </div>
+                        <?php endif; ?>                    
+                    </li>                 
+                </li>
+
+
+                <div class="fieldset">
+               <!--  <h2 class="legend"><?php echo $this->__('Alamat') ?></h2> -->
+                <li class="fields">
+                    <li class="fields">
+                        <div class="field">
+                                <label for="telephone" class="required"><em>*</em><?php echo $this->__('Telp') ?></label>
+                                <div class="input-box">
+                                    <input type="text" name="telephone" id="telephone" value="<?php echo $this->escapeHtml($this->getFormData()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-text validate-number required-entry" />
+                                </div>
+                        </div>
+                    </li>
+<!--                     <li class="fields">
+                        <div class="field">
+                            <label for="no_fax" class="<?php echo $requiredClass ?>"><em><?php echo $requiredCharacter ?></em><?php echo $this->__('Fax') ?></label>
+                            <div class="input-box">
+                                <input type="text" name="no_fax" id="no_fax" value="<?php echo $this->escapeHtml($this->getFormData()->getNoFax()) ?>" title="<?php echo $this->__('Fax') ?>" class="input-text <?php echo $this->getAddressForced() ? $this->helper('customer/address')->getAttributeValidationClass('no_fax') : ''?>" />
+                            </div>
+                        </div>
+                     </li> -->
+                    <li class="fields">
+                    <div class="field">
+                        <label for="no_fax" class="required"><em>*</em><?php echo $this->__('Fax') ?></label>
+                        <div class="input-box">
+                            <input type="text" name="no_fax" id="no_fax" value="<?php echo $this->escapeHtml($this->getFormData()->getNoFax()) ?>" title="<?php echo $this->__('Fax') ?>" class="input-text validate-number required-entry" />
+                        </div>
+                    </div>
+                    </li>
+
+
+                   
+
                     
                     
                    
@@ -445,7 +443,7 @@ function stateChangedKel(){
         </div>
     <?php endif; ?>
         <div class="fieldset">
-            <h2 class="legend"><?php echo $this->__('Login') ?></h2>
+            <h2 class="legend"><?php echo $this->__('Informasi Login') ?></h2>
             <ul class="form-list">
                 <li class="fields">
                     <div class="field">
@@ -471,35 +469,8 @@ function stateChangedKel(){
 
                     <li class="control">
                             <input type="checkbox" name="1" value="1" class="checkbox validate-one-required" required="" />
-                        <label for="1" class="required"><em>*</em><?php echo $this->__('Saya menyetujui term & condition <a href="http://magentoindonesia.com/magento/"></a> IDMarco.com ') ?></label>
+                        <label for="1" class="required"><em>*</em><?php echo $this->__('Saya menyetujui <a href="http://magentoindonesia.com/magento/">term & condition </a> IDMarco.com ') ?></label>
                     </li>
-
-                    <div class="term" style="width: 100%;
-                        overflow-y: auto;
-                        height: 130px;
-                        display: block;">
-                        <div class="required"  style="line-height: 21px;font-size:12px ">
-                        <ol>
-                            <li>Pengguna dengan ini menyatakan bahwa pengguna adalah orang yang cakap dan mampu untuk mengikatkan dirinya dalam sebuah perjanjian yang sah menurut hukum.</li>
-                            <li>IDMarco tidak memungut biaya pendaftaran kepada Pengguna.</li>
-                            <li>Pengguna yang telah mendaftar berhak bertindak sebagai:
-                            - Pembeli</li>
-                            <li>IDMarco tanpa pemberitahuan terlebih dahulu kepada Pengguna, memiliki kewenangan untuk melakukan tindakan yang perlu atas setiap dugaan pelanggaran atau pelanggaran Syarat & ketentuan dan/atau hukum yang berlaku, yakni tindakan berupa memindahkan Barang ke gudang, penghapusan Barang, moderasi toko, penutupan toko, pembatalan listing, suspensi akun, dan/atau penghapusan akun pengguna.</li>
-                            <li>Pengguna dilarang untuk menciptakan dan/atau menggunakan alat dan/atau fitur otomatis yang bertujuan untuk melakukan manipulasi pada system IDMarco, termasuk namun tidak terbatas pada (i) manipulasi data Toko, (ii) melakukan perambanan (crawling), (iii) transaksi jual beli otomatis, (iv) automasi promosi.</li>
-                            <li>IDMarco memiliki kewenangan untuk melakukan penyesuaian jumlah transaksi toko dan/atau melakukan proses moderasi/menutup akun Pengguna, jika diketahui atau diduga adanya kecurangan oleh Pengguna yang bertujuan memanipulasi data transaksi Pengguna demi meningkatkan reputasi toko (review dan atau jumlah transaksi). Contohnya adalah melakukan proses belanja ke toko sendiri dengan menggunakan akun pribadi atau akun pribadi lainnya.</li>
-                            <li>Pembeli dilarang melakukan duplikasi toko, duplikasi produk, atau tindakan-tindakan lain yang dapat diindikasikan sebagai usaha persaingan tidak sehat.</li>
-                            <li>Pengguna tidak memiliki hak untuk mengubah user id, nama toko dan domain toko pengguna. Pengecualian untuk kondisi tertentu berupa pelanggaran hak merek, atau keperluan update fitur IDMarco yang menyebabkan perubahan nama domain pengguna, maka pengguna dapat melakukan permintaan perubahan nama toko atau domain melalui layanan pelanggan, yang hanya bisa dilakukan satu kali saja.</li>
-                            <li>Pengguna bertanggung jawab secara pribadi untuk menjaga kerahasiaan akun dan password untuk semua aktivitas yang terjadi dalam akun Pengguna.</li>
-                            <li>IDMarco tidak akan meminta password akun Pengguna untuk alasan apapun, oleh karena itu IDMarco menghimbau Pengguna agar tidak memberikan password akun Anda kepada pihak manapun, baik kepada pihak ketiga maupun kepada pihak yang mengatasnamakan IDMarco.</li>
-                            <li>Pengguna setuju untuk memastikan bahwa Pengguna keluar dari akun di akhir setiap sesi dan memberitahu IDMarco jika ada penggunaan tanpa izin atas sandi atau akun Pengguna.</li>
-                            <li>Pengguna dengan ini menyatakan bahwa IDMarco tidak bertanggung jawab atas kerugian atau kerusakan yang timbul dari penyalahgunaan akun Pengguna.</li>
-                            <li>Pengguna memahami dan menyetujui bahwa untuk mempergunakan fasilitas keamanan one time password (OTP) maka penyedia jasa telekomunikasi terkait dapat sewaktu-waktu mengenakan biaya kepada Pengguna dengan nominal sebagai berikut (i) Rp 500 ditambah pajak 10% untuk Indosat, Tri, XL, Smartfren, dan Esia; (ii) Rp 200 ditambah pajak 10% untuk Telkomsel.</li>
-                      </ol>  
-                      </div>
-                    </div>
-
-
-
 
                 </li>
                 <?php echo $this->getChildHtml('form.additional.info'); ?>
